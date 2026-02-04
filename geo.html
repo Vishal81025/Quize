@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 12 Geography Quiz - Board Exam 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .quiz-content {
+            padding: 30px;
+        }
+
+        .start-screen, .quiz-screen, .result-screen {
+            display: none;
+        }
+
+        .start-screen.active, .quiz-screen.active, .result-screen.active {
+            display: block;
+        }
+
+        .chapter-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .chapter-btn {
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .chapter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .chapter-tag {
+            background: #764ba2;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e7edff;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .explanation p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .prev-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .prev-btn:hover {
+            background: #5a6268;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .result-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .result-item h3 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .result-item p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .review-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Tablet Styles (768px - 1024px) */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .container {
+                max-width: 95%;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .chapter-selection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .question-text {
+                font-size: 17px;
+            }
+
+            .option {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+
+            .score-circle {
+                width: 180px;
+                height: 180px;
+                font-size: 42px;
+            }
+
+            .result-details {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Mobile Styles (up to 768px) */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px;
+            }
+
+            .stat-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding: 10px 15px;
+                background: white;
+                border-radius: 8px;
+            }
+
+            .stat-label {
+                text-align: left;
+                margin-bottom: 0;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .quiz-content {
+                padding: 15px;
+            }
+
+            .chapter-selection {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .chapter-btn {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .difficulty-selector {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .difficulty-btn {
+                width: 100%;
+                padding: 12px 20px;
+            }
+
+            .start-btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            .question-card {
+                padding: 18px;
+            }
+
+            .question-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .question-number,
+            .chapter-tag {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .question-text {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            .options {
+                gap: 10px;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .option:hover {
+                transform: translateX(3px);
+            }
+
+            .explanation {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .explanation h4 {
+                font-size: 15px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            .score-circle {
+                width: 140px;
+                height: 140px;
+                font-size: 32px;
+                margin: 20px auto;
+            }
+
+            .result-card {
+                padding: 20px 15px;
+            }
+
+            .result-card h2 {
+                font-size: 22px;
+            }
+
+            .result-details {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 20px 0;
+            }
+
+            .result-item {
+                padding: 15px;
+            }
+
+            .result-item h3 {
+                font-size: 28px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .action-btn {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+
+        /* Small Mobile Styles (up to 480px) */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+
+            .question-text {
+                font-size: 15px;
+            }
+
+            .option {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 28px;
+            }
+
+            .result-item h3 {
+                font-size: 24px;
+            }
+
+            .result-item p {
+                font-size: 13px;
+            }
+        }
+
+        /* Landscape Mobile Styles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .stats-bar {
+                flex-direction: row;
+                padding: 10px;
+            }
+
+            .stat-item {
+                padding: 8px;
+            }
+
+            .quiz-content {
+                padding: 10px;
+            }
+
+            .question-card {
+                padding: 12px;
+            }
+
+            .score-circle {
+                width: 100px;
+                height: 100px;
+                font-size: 24px;
+                margin: 15px auto;
+            }
+        }
+
+        /* Creator Credit Styles */
+        .creator-credit {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .creator-credit h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .creator-credit p {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .creator-credit .tagline {
+            font-size: 16px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .creator-credit {
+                margin-top: 20px;
+                padding: 15px;
+            }
+
+            .creator-credit h3 {
+                font-size: 16px;
+            }
+
+            .creator-credit p {
+                font-size: 18px;
+            }
+
+            .creator-credit .tagline {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Class 12 Geography MCQ Quiz</h1>
+            <p>Complete Coverage - Board Examination 2026</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-label">Total Questions</div>
+                <div class="stat-value" id="totalQuestions">100</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Current Question</div>
+                <div class="stat-value" id="currentQuestion">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="currentScore">0</div>
+            </div>
+        </div>
+
+        <div class="quiz-content">
+            <!-- Start Screen -->
+            <div class="start-screen active">
+                <h2 style="text-align: center; margin-bottom: 20px; color: #333;">Select Quiz Mode</h2>
+                
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn selected" onclick="selectDifficulty('all')">All Questions</button>
+                    <button class="difficulty-btn" onclick="selectDifficulty('random')">Random 25</button>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #667eea;">Choose Chapters:</h3>
+                <div class="chapter-selection" id="chapterSelection"></div>
+                
+                <button class="start-btn" onclick="startQuiz()">Start Quiz 🚀</button>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="quiz-screen">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <div class="question-card" id="questionCard"></div>
+
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" onclick="previousQuestion()">← Previous</button>
+                    <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen">
+                <div class="result-card">
+                    <h2 style="color: #333; margin-bottom: 20px;">Quiz Completed! 🎉</h2>
+                    <div class="score-circle" id="finalScore">0%</div>
+                    
+                    <div class="result-details">
+                        <div class="result-item">
+                            <h3 id="correctCount">0</h3>
+                            <p>Correct</p>
+                        </div>
+                        <div class="result-item">
+                            <h3 id="incorrectCount">0</h3>
+                            <p>Incorrect</p>
+                        </div>
+                        <div class="result-item">
+                            <h3 id="accuracyPercent">0%</h3>
+                            <p>Accuracy</p>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+                        <button class="action-btn review-btn" onclick="reviewAnswers()">Review Answers</button>
+                    </div>
+
+                    <div class="creator-credit">
+                        <h3>Made By</h3>
+                        <p>✨ Vishal Kumar ✨</p>
+                        <p class="tagline">Happy Learning! 📚🎓</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive question bank covering all concepts from the PDF
+        const questionBank = [
+            // Chapter 1: Population - Distribution, Density, Growth and Composition
+            {
+                chapter: "Population",
+                question: "What does population composition refer to?",
+                options: [
+                    "Only the age and sex structure of population",
+                    "The structure including age, sex, literacy, health, occupation, and income",
+                    "Just the geographical distribution of people",
+                    "Only birth and death rates"
+                ],
+                correct: 1,
+                explanation: "Population composition refers to the complete structure of population including characteristics such as age, sex, literacy rate, health status, occupation, and income level."
+            },
+            {
+                chapter: "Population",
+                question: "What is India's population density according to 2011 census?",
+                options: [
+                    "325 persons per sq. km",
+                    "382 persons per sq. km",
+                    "450 persons per sq. km",
+                    "300 persons per sq. km"
+                ],
+                correct: 1,
+                explanation: "India's population density in 2011 census was 382 persons per square kilometer."
+            },
+            {
+                chapter: "Population",
+                question: "Which of the following is a PUSH factor of migration?",
+                options: [
+                    "Better employment opportunities",
+                    "Quality healthcare facilities",
+                    "Unemployment and poverty",
+                    "Modern infrastructure"
+                ],
+                correct: 2,
+                explanation: "Unemployment and poverty are push factors that force people to leave their place of origin. Better opportunities and facilities are pull factors."
+            },
+            {
+                chapter: "Population",
+                question: "What is the sex ratio in India according to 2011 census?",
+                options: [
+                    "933 females per 1000 males",
+                    "943 females per 1000 males",
+                    "950 females per 1000 males",
+                    "927 females per 1000 males"
+                ],
+                correct: 1,
+                explanation: "India's sex ratio in 2011 was 943 females per 1000 males."
+            },
+            {
+                chapter: "Population",
+                question: "Which state has the LOWEST sex ratio in India?",
+                options: [
+                    "Kerala",
+                    "Punjab",
+                    "Haryana",
+                    "Tamil Nadu"
+                ],
+                correct: 2,
+                explanation: "Haryana has the lowest sex ratio at 877 females per 1000 males, followed by Punjab at 893."
+            },
+            {
+                chapter: "Population",
+                question: "What is the replacement level Total Fertility Rate (TFR)?",
+                options: [
+                    "1.8",
+                    "2.1",
+                    "2.5",
+                    "3.0"
+                ],
+                correct: 1,
+                explanation: "Replacement level TFR is 2.1, which maintains a stable population. India's current TFR is 2.0."
+            },
+            {
+                chapter: "Population",
+                question: "The National Population Policy 2000 aims to achieve stable population by which year?",
+                options: [
+                    "2030",
+                    "2040",
+                    "2045",
+                    "2050"
+                ],
+                correct: 2,
+                explanation: "The National Population Policy 2000 set the goal of achieving stable population by 2045."
+            },
+            {
+                chapter: "Population",
+                question: "Which stage of demographic transition is characterized by high birth and death rates?",
+                options: [
+                    "Early Expanding Stage",
+                    "High Stationary Stage",
+                    "Late Expanding Stage",
+                    "Low Stationary Stage"
+                ],
+                correct: 1,
+                explanation: "High Stationary Stage (Stage 1) has high birth and death rates with slow population growth."
+            },
+            {
+                chapter: "Population",
+                question: "Which Indian state has the highest population density?",
+                options: [
+                    "West Bengal",
+                    "Kerala",
+                    "Bihar",
+                    "Uttar Pradesh"
+                ],
+                correct: 2,
+                explanation: "Bihar has the highest population density at 1,102 persons per sq. km, followed by West Bengal."
+            },
+            {
+                chapter: "Population",
+                question: "What percentage of India's population consists of adolescents (10-19 years)?",
+                options: [
+                    "15%",
+                    "20%",
+                    "25%",
+                    "30%"
+                ],
+                correct: 1,
+                explanation: "Adolescents (10-19 years) constitute about 20% of India's population."
+            },
+            {
+                chapter: "Population",
+                question: "Which sector employs the largest percentage of India's workforce?",
+                options: [
+                    "Secondary sector (Manufacturing)",
+                    "Tertiary sector (Services)",
+                    "Primary sector (Agriculture)",
+                    "Quaternary sector"
+                ],
+                correct: 2,
+                explanation: "Primary sector (Agriculture and allied activities) still employs about 45-50% of India's workforce, though declining."
+            },
+            {
+                chapter: "Population",
+                question: "What does a declining sex ratio indicate?",
+                options: [
+                    "Better healthcare for women",
+                    "Gender discrimination and female infanticide",
+                    "Higher male mortality",
+                    "Improved education"
+                ],
+                correct: 1,
+                explanation: "Declining sex ratio indicates gender discrimination, female infanticide, and sex-selective abortion."
+            },
+            {
+                chapter: "Population",
+                question: "Which state in India has the HIGHEST sex ratio?",
+                options: [
+                    "Tamil Nadu",
+                    "Andhra Pradesh",
+                    "Kerala",
+                    "Karnataka"
+                ],
+                correct: 2,
+                explanation: "Kerala has the highest sex ratio at 1,084 females per 1000 males."
+            },
+            {
+                chapter: "Population",
+                question: "What is the age group considered as working-age population?",
+                options: [
+                    "10-55 years",
+                    "15-59 years",
+                    "18-60 years",
+                    "20-65 years"
+                ],
+                correct: 1,
+                explanation: "The working-age population is typically considered as 15-59 years."
+            },
+            {
+                chapter: "Population",
+                question: "Which state has the lowest population density in India?",
+                options: [
+                    "Sikkim",
+                    "Mizoram",
+                    "Arunachal Pradesh",
+                    "Nagaland"
+                ],
+                correct: 2,
+                explanation: "Arunachal Pradesh has the lowest population density at 17 persons per sq. km due to hilly terrain and harsh climate."
+            },
+
+            // Chapter 2: Migration
+            {
+                chapter: "Migration",
+                question: "What is migration?",
+                options: [
+                    "Temporary visit to another place",
+                    "Movement with intention of settling permanently or temporarily",
+                    "Only international movement",
+                    "Daily commute to work"
+                ],
+                correct: 1,
+                explanation: "Migration is the movement of people from one place to another with the intention of settling, permanently or temporarily, at the destination."
+            },
+            {
+                chapter: "Migration",
+                question: "Which is the LARGEST stream of internal migration in India?",
+                options: [
+                    "Rural to Urban",
+                    "Urban to Rural",
+                    "Rural to Rural",
+                    "Urban to Urban"
+                ],
+                correct: 2,
+                explanation: "Rural to Rural migration is the largest stream, accounting for about 50% of total internal migration, mainly due to marriage."
+            },
+            {
+                chapter: "Migration",
+                question: "What is the main reason for female migration in rural to rural stream?",
+                options: [
+                    "Employment",
+                    "Education",
+                    "Marriage",
+                    "Business"
+                ],
+                correct: 2,
+                explanation: "Marriage is the dominant reason for female migration in rural to rural stream in India."
+            },
+            {
+                chapter: "Migration",
+                question: "Seasonal migration of agricultural laborers occurs mainly during which period?",
+                options: [
+                    "Throughout the year equally",
+                    "During sowing and harvesting seasons",
+                    "Only in winter",
+                    "Only in monsoon"
+                ],
+                correct: 1,
+                explanation: "Seasonal migration of agricultural laborers occurs mainly during sowing and harvesting seasons (2-4 months)."
+            },
+            {
+                chapter: "Migration",
+                question: "Which of the following is a consequence of rural to urban migration for urban areas?",
+                options: [
+                    "Reduced population density",
+                    "Slum development and overcrowding",
+                    "Improved infrastructure",
+                    "Decreased pollution"
+                ],
+                correct: 1,
+                explanation: "Rural to urban migration leads to slum development, overcrowding, and pressure on urban infrastructure."
+            },
+            {
+                chapter: "Migration",
+                question: "Brain drain refers to:",
+                options: [
+                    "Migration of unskilled workers",
+                    "Internal migration within country",
+                    "Migration of skilled professionals to other countries",
+                    "Return migration"
+                ],
+                correct: 2,
+                explanation: "Brain drain refers to the migration of skilled and educated professionals from developing to developed countries."
+            },
+            {
+                chapter: "Migration",
+                question: "Which type of migration requires passport and visa?",
+                options: [
+                    "Internal migration",
+                    "Rural to urban migration",
+                    "International migration",
+                    "Seasonal migration"
+                ],
+                correct: 2,
+                explanation: "International migration (across countries) requires passport, visa, and immigration clearance."
+            },
+            {
+                chapter: "Migration",
+                question: "What is the main economic benefit of migration for rural areas?",
+                options: [
+                    "Increased agricultural production",
+                    "Remittances sent by migrants",
+                    "Better infrastructure",
+                    "More job opportunities"
+                ],
+                correct: 1,
+                explanation: "Remittances (money sent back by migrants) improve the rural economy and provide income to families."
+            },
+            {
+                chapter: "Migration",
+                question: "Which state receives the most workers for seasonal sugarcane cutting?",
+                options: [
+                    "Punjab",
+                    "Haryana",
+                    "Maharashtra",
+                    "Uttar Pradesh"
+                ],
+                correct: 2,
+                explanation: "Maharashtra's sugarcane fields attract seasonal workers from drought-prone areas during October to March."
+            },
+            {
+                chapter: "Migration",
+                question: "Urban to rural migration is mainly due to:",
+                options: [
+                    "Better job opportunities in villages",
+                    "Retirement and return to native place",
+                    "Industrial growth in rural areas",
+                    "Better education in villages"
+                ],
+                correct: 1,
+                explanation: "Urban to rural migration is mainly due to retirement, return to native place, or failure to adjust in cities."
+            },
+
+            // Chapter 3: Human Development
+            {
+                chapter: "Human Development",
+                question: "Who developed the concept of Human Development Index (HDI)?",
+                options: [
+                    "World Bank",
+                    "United Nations Development Programme (UNDP)",
+                    "International Monetary Fund",
+                    "World Health Organization"
+                ],
+                correct: 1,
+                explanation: "HDI was developed by the United Nations Development Programme (UNDP) to measure human development."
+            },
+            {
+                chapter: "Human Development",
+                question: "How many dimensions does HDI measure?",
+                options: [
+                    "Two",
+                    "Three",
+                    "Four",
+                    "Five"
+                ],
+                correct: 1,
+                explanation: "HDI measures three dimensions: Health (life expectancy), Education (schooling), and Income (GNI per capita)."
+            },
+            {
+                chapter: "Human Development",
+                question: "What is India's HDI rank (approximately)?",
+                options: [
+                    "50-75",
+                    "75-100",
+                    "100-131",
+                    "150-175"
+                ],
+                correct: 2,
+                explanation: "India's HDI rank is 131 out of 191 countries with an HDI value of 0.645 (medium category)."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which approach to development focuses on building human capabilities and freedoms?",
+                options: [
+                    "Income Approach",
+                    "Welfare Approach",
+                    "Basic Needs Approach",
+                    "Capability Approach"
+                ],
+                correct: 3,
+                explanation: "Capability Approach, developed by Amartya Sen, focuses on building human capabilities and expanding freedoms."
+            },
+            {
+                chapter: "Human Development",
+                question: "What is the key difference between growth and development?",
+                options: [
+                    "Growth is qualitative, development is quantitative",
+                    "Growth is quantitative, development is qualitative",
+                    "Both are the same",
+                    "Neither is measurable"
+                ],
+                correct: 1,
+                explanation: "Growth is quantitative (numerical increase) while development is qualitative (improvement in well-being)."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which pillar is NOT part of human development according to UNDP?",
+                options: [
+                    "Equity",
+                    "Sustainability",
+                    "Productivity",
+                    "Military strength"
+                ],
+                correct: 3,
+                explanation: "The four pillars of human development are: Equity, Sustainability, Productivity, and Empowerment."
+            },
+            {
+                chapter: "Human Development",
+                question: "Life expectancy at birth is used to measure which dimension of HDI?",
+                options: [
+                    "Education",
+                    "Income",
+                    "Health",
+                    "Employment"
+                ],
+                correct: 2,
+                explanation: "Life expectancy at birth is used to measure the health dimension (long and healthy life) in HDI."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which state in India is known for the 'Kerala model' of development?",
+                options: [
+                    "Tamil Nadu",
+                    "Kerala",
+                    "Karnataka",
+                    "Andhra Pradesh"
+                ],
+                correct: 1,
+                explanation: "Kerala model emphasizes high HDI with moderate economic growth, focusing on education, health, and social equity."
+            },
+            {
+                chapter: "Human Development",
+                question: "What does GNI stand for in HDI calculation?",
+                options: [
+                    "Gross National Investment",
+                    "Gross National Income",
+                    "General National Index",
+                    "Global National Indicator"
+                ],
+                correct: 1,
+                explanation: "GNI stands for Gross National Income (per capita in PPP terms), used to measure standard of living in HDI."
+            },
+            {
+                chapter: "Human Development",
+                question: "Very high HDI countries have HDI value of:",
+                options: [
+                    "≥ 0.700",
+                    "≥ 0.750",
+                    "≥ 0.800",
+                    "≥ 0.850"
+                ],
+                correct: 2,
+                explanation: "Very high HDI countries have HDI ≥ 0.800. India (0.645) falls in the medium HDI category."
+            },
+
+            // Additional Questions covering more concepts
+            {
+                chapter: "Population",
+                question: "What does demographic dividend refer to?",
+                options: [
+                    "Increase in elderly population",
+                    "Economic benefit from large working-age population",
+                    "Population growth rate",
+                    "Birth rate exceeding death rate"
+                ],
+                correct: 1,
+                explanation: "Demographic dividend refers to economic benefits when a large working-age population is properly educated and employed."
+            },
+            {
+                chapter: "Population",
+                question: "Which state has the HIGHEST Total Fertility Rate (TFR)?",
+                options: [
+                    "Kerala",
+                    "Bihar",
+                    "Tamil Nadu",
+                    "West Bengal"
+                ],
+                correct: 1,
+                explanation: "Bihar has the highest TFR at 3.0, while Kerala has the lowest at 1.6."
+            },
+            {
+                chapter: "Population",
+                question: "PCPNDT Act 1994 was enacted to prevent:",
+                options: [
+                    "Child marriage",
+                    "Female infanticide and sex-selective abortion",
+                    "Dowry system",
+                    "Illiteracy"
+                ],
+                correct: 1,
+                explanation: "Pre-Conception and Pre-Natal Diagnostic Techniques Act 1994 bans sex determination and sex-selective abortion."
+            },
+            {
+                chapter: "Population",
+                question: "Which government campaign focuses on girl child welfare?",
+                options: [
+                    "Swachh Bharat",
+                    "Beti Bachao, Beti Padhao",
+                    "Digital India",
+                    "Skill India"
+                ],
+                correct: 1,
+                explanation: "'Beti Bachao, Beti Padhao' campaign aims to save and educate girl children, addressing declining sex ratio."
+            },
+            {
+                chapter: "Population",
+                question: "In Stage 2 of demographic transition, what happens?",
+                options: [
+                    "Both birth and death rates are high",
+                    "Death rates decline but birth rates remain high",
+                    "Both birth and death rates are low",
+                    "Birth rates exceed death rates significantly"
+                ],
+                correct: 1,
+                explanation: "Stage 2 (Early Expanding) has declining death rates due to better healthcare while birth rates remain high, causing rapid growth."
+            },
+            {
+                chapter: "Population",
+                question: "Dependency ratio measures:",
+                options: [
+                    "Number of workers per 100 people",
+                    "Number of dependents per 100 working individuals",
+                    "Birth rate vs death rate",
+                    "Urban vs rural population"
+                ],
+                correct: 1,
+                explanation: "Dependency ratio calculates the number of dependents (children and elderly) per 100 working-age individuals."
+            },
+            {
+                chapter: "Population",
+                question: "Which factor is responsible for declining death rates globally?",
+                options: [
+                    "Increased wars",
+                    "Improved healthcare, nutrition, and sanitation",
+                    "Higher birth rates",
+                    "Industrial pollution"
+                ],
+                correct: 1,
+                explanation: "Improved healthcare, nutrition, and sanitation have significantly reduced death rates globally."
+            },
+            {
+                chapter: "Migration",
+                question: "What is the main reason for male-dominated rural to urban migration?",
+                options: [
+                    "Marriage",
+                    "Employment and better wages",
+                    "Education of children",
+                    "Religious pilgrimage"
+                ],
+                correct: 1,
+                explanation: "Employment opportunities and better wages in cities are the main reasons for male-dominated rural to urban migration."
+            },
+            {
+                chapter: "Migration",
+                question: "Reverse migration refers to:",
+                options: [
+                    "International to internal migration",
+                    "Urban to rural migration",
+                    "Seasonal to permanent migration",
+                    "Male to female migration"
+                ],
+                correct: 1,
+                explanation: "Reverse migration refers to urban to rural migration, which increased during COVID-19 pandemic."
+            },
+            {
+                chapter: "Migration",
+                question: "Which act protects inter-state migrant workers?",
+                options: [
+                    "Factories Act 1948",
+                    "Inter-State Migrant Workmen Act 1979",
+                    "Minimum Wages Act 1948",
+                    "Contract Labour Act 1970"
+                ],
+                correct: 1,
+                explanation: "Inter-State Migrant Workmen Act, 1979 provides legal protection to migrant workers."
+            },
+            {
+                chapter: "Migration",
+                question: "Transhumance is associated with:",
+                options: [
+                    "Industrial workers",
+                    "IT professionals",
+                    "Pastoral communities moving with livestock",
+                    "Construction workers"
+                ],
+                correct: 2,
+                explanation: "Transhumance is the seasonal movement of pastoral communities with their livestock based on fodder availability."
+            },
+            {
+                chapter: "Migration",
+                question: "Which problem do children of seasonal migrants face most?",
+                options: [
+                    "Better education opportunities",
+                    "Disrupted education and school dropout",
+                    "Too much leisure time",
+                    "Access to technology"
+                ],
+                correct: 1,
+                explanation: "Children of seasonal migrants face disrupted education and often drop out of school due to frequent movement."
+            },
+            {
+                chapter: "Migration",
+                question: "Gulf countries attract Indian migrants mainly for:",
+                options: [
+                    "Advanced education",
+                    "Political asylum",
+                    "Labor work and employment",
+                    "Tourism"
+                ],
+                correct: 2,
+                explanation: "Gulf countries attract millions of Indian migrants for labor work and employment opportunities."
+            },
+            {
+                chapter: "Human Development",
+                question: "Who developed the Capability Approach?",
+                options: [
+                    "Adam Smith",
+                    "Amartya Sen and Martha Nussbaum",
+                    "Karl Marx",
+                    "John Maynard Keynes"
+                ],
+                correct: 1,
+                explanation: "The Capability Approach was developed by economists Amartya Sen and philosopher Martha Nussbaum."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which approach treats people as passive recipients?",
+                options: [
+                    "Income Approach",
+                    "Welfare Approach",
+                    "Basic Needs Approach",
+                    "Capability Approach"
+                ],
+                correct: 1,
+                explanation: "Welfare Approach treats people as passive recipients of government services in a top-down manner."
+            },
+            {
+                chapter: "Human Development",
+                question: "India's mean years of schooling is approximately:",
+                options: [
+                    "4.5 years",
+                    "6.7 years",
+                    "8.5 years",
+                    "10.2 years"
+                ],
+                correct: 1,
+                explanation: "India's mean years of schooling for adults (25+) is approximately 6.7 years."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which is NOT a basic need according to the Basic Needs Approach?",
+                options: [
+                    "Health",
+                    "Education",
+                    "Luxury goods",
+                    "Sanitation"
+                ],
+                correct: 2,
+                explanation: "The six basic needs are: Health, Education, Food, Water supply, Sanitation, and Housing."
+            },
+            {
+                chapter: "Human Development",
+                question: "Sustainability in human development means:",
+                options: [
+                    "Maximum use of resources today",
+                    "Meeting present needs without compromising future generations",
+                    "Only economic growth",
+                    "Population control"
+                ],
+                correct: 1,
+                explanation: "Sustainability means meeting present needs without compromising the ability of future generations to meet their needs."
+            },
+            {
+                chapter: "Human Development",
+                question: "Inequality-adjusted HDI (IHDI) accounts for:",
+                options: [
+                    "Environmental factors",
+                    "Political freedom",
+                    "Inequality within countries",
+                    "Military strength"
+                ],
+                correct: 2,
+                explanation: "IHDI adjusts HDI for inequality in distribution of health, education, and income within countries."
+            },
+            {
+                chapter: "Human Development",
+                question: "Empowerment as a pillar of development means:",
+                options: [
+                    "Military power",
+                    "Ability of people to make their own choices",
+                    "Economic growth only",
+                    "Technological advancement"
+                ],
+                correct: 1,
+                explanation: "Empowerment means giving people the power to make their own choices and participate in decisions affecting their lives."
+            },
+            {
+                chapter: "Population",
+                question: "Infant Mortality Rate (IMR) is defined as:",
+                options: [
+                    "Deaths per 1000 live births in first month",
+                    "Deaths of children under one year per 1000 live births",
+                    "Deaths of children under 5 years",
+                    "Total child deaths"
+                ],
+                correct: 1,
+                explanation: "IMR is the number of deaths of children under one year of age per 1,000 live births."
+            },
+            {
+                chapter: "Population",
+                question: "Which sector contributes MOST to India's GDP?",
+                options: [
+                    "Primary sector (Agriculture)",
+                    "Secondary sector (Manufacturing)",
+                    "Tertiary sector (Services)",
+                    "Quaternary sector"
+                ],
+                correct: 2,
+                explanation: "Tertiary sector (Services) contributes more than 50% to India's GDP, though primary sector employs most workers."
+            },
+            {
+                chapter: "Population",
+                question: "Rashtriya Kishor Swasthya Karyakram (RKSK) focuses on:",
+                options: [
+                    "Elderly care",
+                    "Maternal health",
+                    "Adolescent health",
+                    "Child nutrition"
+                ],
+                correct: 2,
+                explanation: "RKSK is a government health program specifically designed for adolescents (10-19 years)."
+            },
+            {
+                chapter: "Population",
+                question: "Japan is entering which stage of demographic transition?",
+                options: [
+                    "Stage 2 - Early Expanding",
+                    "Stage 3 - Late Expanding",
+                    "Stage 4 - Low Stationary",
+                    "Stage 5 - Declining"
+                ],
+                correct: 3,
+                explanation: "Japan is entering Stage 5 (Declining Stage) where birth rates fall below death rates, causing population decline."
+            },
+            {
+                chapter: "Population",
+                question: "What is the main objective of NPP 2000?",
+                options: [
+                    "Increase population growth",
+                    "Achieve stable population by 2045",
+                    "Reduce life expectancy",
+                    "Promote urbanization"
+                ],
+                correct: 1,
+                explanation: "The main objective of National Population Policy 2000 is to achieve a stable population by 2045."
+            },
+            {
+                chapter: "Migration",
+                question: "What percentage of internal migration is rural to rural?",
+                options: [
+                    "20%",
+                    "35%",
+                    "50%",
+                    "65%"
+                ],
+                correct: 2,
+                explanation: "Rural to rural migration constitutes about 50% of total internal migration, mainly due to marriage."
+            },
+            {
+                chapter: "Migration",
+                question: "Brick kiln workers typically migrate during:",
+                options: [
+                    "Monsoon season only",
+                    "October to June",
+                    "Summer months only",
+                    "December to February"
+                ],
+                correct: 1,
+                explanation: "Brick kiln workers migrate from October to June when brick kilns are operational (dry season)."
+            },
+            {
+                chapter: "Migration",
+                question: "Which region of India has the highest out-migration?",
+                options: [
+                    "Southern states",
+                    "Western states",
+                    "Bihar and Uttar Pradesh",
+                    "Northeastern states"
+                ],
+                correct: 2,
+                explanation: "Bihar and Uttar Pradesh have the highest out-migration due to poverty, unemployment, and lack of opportunities."
+            },
+            {
+                chapter: "Migration",
+                question: "Remittances from international migrants affect:",
+                options: [
+                    "Only individual families",
+                    "Balance of payments and foreign exchange",
+                    "Only urban economy",
+                    "Agricultural productivity only"
+                ],
+                correct: 1,
+                explanation: "International remittances affect balance of payments, foreign exchange reserves, and overall economy."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which country typically has the highest HDI?",
+                options: [
+                    "United States",
+                    "China",
+                    "Norway/Switzerland",
+                    "Brazil"
+                ],
+                correct: 2,
+                explanation: "Countries like Norway, Switzerland, and Ireland consistently rank highest in HDI with values above 0.95."
+            },
+            {
+                chapter: "Human Development",
+                question: "The Income Approach assumes that:",
+                options: [
+                    "Health is most important",
+                    "Higher income automatically leads to better life",
+                    "Education determines development",
+                    "Environment is crucial"
+                ],
+                correct: 1,
+                explanation: "Income Approach assumes higher income leads to better life, measuring development through per capita income and GDP."
+            },
+            {
+                chapter: "Human Development",
+                question: "Gender Development Index (GDI) measures:",
+                options: [
+                    "Only women's education",
+                    "Gender gap in health, education, and income",
+                    "Female literacy only",
+                    "Women's employment"
+                ],
+                correct: 1,
+                explanation: "GDI measures gender gap in HDI dimensions - health, education, and command over economic resources."
+            },
+            {
+                chapter: "Population",
+                question: "Which physical factor affects population distribution MOST?",
+                options: [
+                    "Political boundaries",
+                    "Relief and climate",
+                    "Historical factors",
+                    "Cultural preferences"
+                ],
+                correct: 1,
+                explanation: "Relief (plains vs mountains) and climate (moderate vs extreme) are the most influential physical factors."
+            },
+            {
+                chapter: "Population",
+                question: "Coastal areas are densely populated mainly because of:",
+                options: [
+                    "Good climate only",
+                    "Water availability, trade opportunities, and fertile soil",
+                    "Tourism only",
+                    "Government policies"
+                ],
+                correct: 1,
+                explanation: "Coastal areas offer water availability, trade and fishing opportunities, fertile soil, and moderate climate."
+            },
+            {
+                chapter: "Population",
+                question: "Urbanization is associated with which occupational shift?",
+                options: [
+                    "Primary to tertiary sector",
+                    "Tertiary to primary sector",
+                    "No change in sectors",
+                    "Only within primary sector"
+                ],
+                correct: 0,
+                explanation: "Urbanization causes shift from primary (agriculture) to tertiary (services) sector employment."
+            },
+            {
+                chapter: "Population",
+                question: "Female workforce participation in India is approximately:",
+                options: [
+                    "15-20%",
+                    "20-25%",
+                    "40-45%",
+                    "50-55%"
+                ],
+                correct: 1,
+                explanation: "Female workforce participation in India remains low at about 20-25%, indicating gender disparity."
+            },
+            {
+                chapter: "Migration",
+                question: "What is circular migration?",
+                options: [
+                    "One-time permanent migration",
+                    "Repeated seasonal movement to same destination",
+                    "Random movement",
+                    "International migration only"
+                ],
+                correct: 1,
+                explanation: "Circular migration involves repeated seasonal visits to the same destination for work, then returning home."
+            },
+            {
+                chapter: "Migration",
+                question: "Aging population in rural areas is caused by:",
+                options: [
+                    "Better healthcare in villages",
+                    "Out-migration of youth to cities",
+                    "Higher birth rates",
+                    "Government policies"
+                ],
+                correct: 1,
+                explanation: "Out-migration of youth to cities leaves elderly and children in villages, creating aging population."
+            },
+            {
+                chapter: "Migration",
+                question: "Which type of migration is most influenced by marriage customs?",
+                options: [
+                    "Urban to urban",
+                    "Rural to urban",
+                    "Rural to rural",
+                    "Urban to rural"
+                ],
+                correct: 2,
+                explanation: "Rural to rural migration is dominated by female migration due to marriage customs (patrilocal residence)."
+            },
+            {
+                chapter: "Human Development",
+                question: "Multidimensional Poverty Index (MPI) measures:",
+                options: [
+                    "Only income poverty",
+                    "Poverty across health, education, and living standards",
+                    "Only educational poverty",
+                    "Only health poverty"
+                ],
+                correct: 1,
+                explanation: "MPI measures poverty across multiple dimensions: health, education, and living standards simultaneously."
+            },
+            {
+                chapter: "Human Development",
+                question: "Which state in India has the highest HDI?",
+                options: [
+                    "Maharashtra",
+                    "Kerala",
+                    "Gujarat",
+                    "Tamil Nadu"
+                ],
+                correct: 1,
+                explanation: "Kerala has the highest HDI among Indian states due to high literacy, health outcomes, and social development."
+            },
+            {
+                chapter: "Human Development",
+                question: "Life expectancy in India is approximately:",
+                options: [
+                    "55 years",
+                    "63 years",
+                    "69.7 years",
+                    "75 years"
+                ],
+                correct: 2,
+                explanation: "India's life expectancy at birth is approximately 69.7 years as of 2020."
+            },
+            {
+                chapter: "Population",
+                question: "Which region has negative population growth?",
+                options: [
+                    "South Asia",
+                    "Sub-Saharan Africa",
+                    "Some European countries like Germany",
+                    "Southeast Asia"
+                ],
+                correct: 2,
+                explanation: "Several European countries like Germany, Italy, and Japan experience negative or near-zero growth."
+            },
+            {
+                chapter: "Population",
+                question: "Religious centers attract population due to:",
+                options: [
+                    "Economic opportunities only",
+                    "Pilgrimage and spiritual significance",
+                    "Better climate",
+                    "Government schemes"
+                ],
+                correct: 1,
+                explanation: "Religious centers attract pilgrims and permanent residents due to spiritual significance and economic activities."
+            },
+            {
+                chapter: "Population",
+                question: "IT sector employment is concentrated in which sector?",
+                options: [
+                    "Primary",
+                    "Secondary",
+                    "Tertiary",
+                    "Quaternary"
+                ],
+                correct: 2,
+                explanation: "IT sector is part of tertiary (services) sector, which is fastest growing in India."
+            },
+            {
+                chapter: "Population",
+                question: "Maternal Mortality Rate (MMR) measures:",
+                options: [
+                    "Total female deaths",
+                    "Deaths during pregnancy and childbirth per 100,000 births",
+                    "Infant deaths",
+                    "Child deaths"
+                ],
+                correct: 1,
+                explanation: "MMR is the number of maternal deaths during pregnancy and childbirth per 100,000 live births."
+            },
+            {
+                chapter: "Population",
+                question: "Punjab and Haryana have high agriculture employment due to:",
+                options: [
+                    "Poor industrial development",
+                    "Green Revolution success and fertile land",
+                    "Lack of education",
+                    "Government mandate"
+                ],
+                correct: 1,
+                explanation: "Punjab and Haryana have prosperous agriculture due to Green Revolution, leading to high primary sector employment."
+            },
+            {
+                chapter: "Migration",
+                question: "Gujjars and Gaddis practice which type of migration?",
+                options: [
+                    "Permanent migration",
+                    "International migration",
+                    "Pastoral/transhumance migration",
+                    "Urban migration"
+                ],
+                correct: 2,
+                explanation: "Gujjars and Gaddis are pastoral communities practicing transhumance - seasonal migration with livestock."
+            },
+            {
+                chapter: "Migration",
+                question: "COVID-19 pandemic caused significant:",
+                options: [
+                    "International migration",
+                    "Rural to urban migration",
+                    "Reverse migration (urban to rural)",
+                    "No migration"
+                ],
+                correct: 2,
+                explanation: "COVID-19 caused massive reverse migration as urban workers returned to their villages during lockdown."
+            },
+            {
+                chapter: "Migration",
+                question: "Which sector employs most seasonal migrants?",
+                options: [
+                    "IT services",
+                    "Banking",
+                    "Agriculture and construction",
+                    "Education"
+                ],
+                correct: 2,
+                explanation: "Agriculture and construction sectors employ most seasonal migrants for temporary work."
+            },
+            {
+                chapter: "Human Development",
+                question: "Expected years of schooling measures:",
+                options: [
+                    "Past educational achievement",
+                    "Current enrollment only",
+                    "Future educational opportunity for children",
+                    "Adult literacy only"
+                ],
+                correct: 2,
+                explanation: "Expected years of schooling indicates the total years of schooling a child is expected to receive."
+            },
+            {
+                chapter: "Human Development",
+                question: "PPP in GNI per capita stands for:",
+                options: [
+                    "Public Private Partnership",
+                    "Purchasing Power Parity",
+                    "Per Person Payment",
+                    "Primary Production Power"
+                ],
+                correct: 1,
+                explanation: "PPP (Purchasing Power Parity) adjusts income for cost of living differences between countries."
+            },
+            {
+                chapter: "Human Development",
+                question: "Development focuses on:",
+                options: [
+                    "Only economic growth",
+                    "Only social welfare",
+                    "Holistic improvement in quality of life",
+                    "Only infrastructure"
+                ],
+                correct: 2,
+                explanation: "Development is holistic, encompassing economic, social, political, and environmental improvement in quality of life."
+            },
+            {
+                chapter: "Population",
+                question: "Which factor leads to lower TFR?",
+                options: [
+                    "Early marriage",
+                    "Low female literacy",
+                    "Higher female education and workforce participation",
+                    "Cultural preference for large families"
+                ],
+                correct: 2,
+                explanation: "Higher female education and workforce participation lead to delayed marriage and lower fertility rates."
+            },
+            {
+                chapter: "Population",
+                question: "Contraceptive prevalence rate affects:",
+                options: [
+                    "Death rate",
+                    "Birth rate and TFR",
+                    "Migration rate",
+                    "Literacy rate"
+                ],
+                correct: 1,
+                explanation: "Higher contraceptive use leads to lower birth rates and Total Fertility Rate."
+            },
+            {
+                chapter: "Population",
+                question: "Dowry system contributes to:",
+                options: [
+                    "Higher sex ratio",
+                    "Declining sex ratio and discrimination",
+                    "Better female education",
+                    "Women empowerment"
+                ],
+                correct: 1,
+                explanation: "Dowry system makes daughters economically burdensome, contributing to declining sex ratio and discrimination."
+            },
+            {
+                chapter: "Population",
+                question: "Which NPP 2000 goal relates to childbearing?",
+                options: [
+                    "Increase early marriage",
+                    "Promote delayed marriage and childbearing",
+                    "Mandatory childbearing",
+                    "No specific goal"
+                ],
+                correct: 1,
+                explanation: "NPP 2000 promotes delayed marriage and childbearing to reduce fertility rates and improve maternal health."
+            }
+        ];
+
+        let selectedChapters = [];
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizMode = 'all';
+
+        // Initialize the app
+        function init() {
+            renderChapterSelection();
+        }
+
+        function renderChapterSelection() {
+            const chapters = [...new Set(questionBank.map(q => q.chapter))];
+            const container = document.getElementById('chapterSelection');
+            
+            container.innerHTML = chapters.map(chapter => 
+                `<button class="chapter-btn" onclick="toggleChapter('${chapter}')">
+                    ${chapter}
+                </button>`
+            ).join('');
+        }
+
+        function toggleChapter(chapter) {
+            const index = selectedChapters.indexOf(chapter);
+            if (index > -1) {
+                selectedChapters.splice(index, 1);
+            } else {
+                selectedChapters.push(chapter);
+            }
+            
+            // Update button styling
+            const buttons = document.querySelectorAll('.chapter-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === chapter) {
+                    btn.style.opacity = selectedChapters.includes(chapter) ? '1' : '0.6';
+                    btn.style.transform = selectedChapters.includes(chapter) ? 'scale(0.95)' : 'scale(1)';
+                }
+            });
+        }
+
+        function selectDifficulty(mode) {
+            quizMode = mode;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function startQuiz() {
+            if (selectedChapters.length === 0) {
+                alert('Please select at least one chapter!');
+                return;
+            }
+
+            // Filter questions by selected chapters
+            currentQuestions = questionBank.filter(q => selectedChapters.includes(q.chapter));
+            
+            // Apply quiz mode
+            if (quizMode === 'random') {
+                currentQuestions = shuffleArray(currentQuestions).slice(0, 25);
+            }
+            
+            currentQuestions = shuffleArray(currentQuestions);
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+
+            document.querySelector('.start-screen').classList.remove('active');
+            document.querySelector('.quiz-screen').classList.add('active');
+            
+            updateStats();
+            renderQuestion();
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function renderQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const answered = userAnswers[currentQuestionIndex] !== null;
+            
+            const questionHTML = `
+                <div class="question-header">
+                    <span class="question-number">Question ${currentQuestionIndex + 1}/${currentQuestions.length}</span>
+                    <span class="chapter-tag">${question.chapter}</span>
+                </div>
+                <div class="question-text">${question.question}</div>
+                <div class="options">
+                    ${question.options.map((option, index) => `
+                        <div class="option ${userAnswers[currentQuestionIndex] === index ? 'selected' : ''} 
+                                    ${answered && index === question.correct ? 'correct' : ''} 
+                                    ${answered && userAnswers[currentQuestionIndex] === index && index !== question.correct ? 'incorrect' : ''}
+                                    ${answered ? 'disabled' : ''}"
+                             onclick="${!answered ? `selectAnswer(${index})` : ''}">
+                            ${String.fromCharCode(65 + index)}. ${option}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="explanation ${answered ? 'show' : ''}">
+                    <h4>💡 Explanation:</h4>
+                    <p>${question.explanation}</p>
+                </div>
+            `;
+            
+            document.getElementById('questionCard').innerHTML = questionHTML;
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        function selectAnswer(answerIndex) {
+            userAnswers[currentQuestionIndex] = answerIndex;
+            renderQuestion();
+            updateStats();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateStats() {
+            document.getElementById('totalQuestions').textContent = currentQuestions.length;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === currentQuestions[index].correct
+            ).length;
+            document.getElementById('currentScore').textContent = correctAnswers;
+        }
+
+        function updateNavigationButtons() {
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.textContent = 'Submit Quiz';
+                nextBtn.className = 'nav-btn submit-btn';
+                nextBtn.onclick = submitQuiz;
+            } else {
+                nextBtn.textContent = 'Next →';
+                nextBtn.className = 'nav-btn next-btn';
+                nextBtn.onclick = nextQuestion;
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                updateStats();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                updateStats();
+            }
+        }
+
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered questions. Submit anyway?`)) {
+                    return;
+                }
+            }
+            
+            showResults();
+        }
+
+        function showResults() {
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === currentQuestions[index].correct
+            ).length;
+            const incorrectAnswers = userAnswers.filter((answer, index) => 
+                answer !== null && answer !== currentQuestions[index].correct
+            ).length;
+            const accuracy = Math.round((correctAnswers / currentQuestions.length) * 100);
+            
+            document.getElementById('finalScore').textContent = accuracy + '%';
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('incorrectCount').textContent = incorrectAnswers;
+            document.getElementById('accuracyPercent').textContent = accuracy + '%';
+            
+            document.querySelector('.quiz-screen').classList.remove('active');
+            document.querySelector('.result-screen').classList.add('active');
+        }
+
+        function restartQuiz() {
+            selectedChapters = [];
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
+            document.querySelector('.result-screen').classList.remove('active');
+            document.querySelector('.start-screen').classList.add('active');
+            
+            renderChapterSelection();
+        }
+
+        function reviewAnswers() {
+            currentQuestionIndex = 0;
+            document.querySelector('.result-screen').classList.remove('active');
+            document.querySelector('.quiz-screen').classList.add('active');
+            renderQuestion();
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
